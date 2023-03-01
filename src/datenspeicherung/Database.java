@@ -44,7 +44,7 @@ public class Database extends Thread
 	{
 		if (!new File(db_path).exists())
 		{
-			try (InputStream inputStream = Database.class.getResourceAsStream("/vokabeln.sqlite"); OutputStream outputStream = new FileOutputStream(db_path))
+			try (InputStream inputStream = Database.class.getResourceAsStream("/vokabeln_testdata.sqlite"); OutputStream outputStream = new FileOutputStream(db_path))
 			{
 
 				byte[] buffer = new byte[1024];
@@ -89,7 +89,7 @@ public class Database extends Thread
 	{
 		ArrayList<Vokabel> vokabeln = new ArrayList<>();
 		
-		PreparedStatement statement = connect.prepareStatement("select * from vokabeln where score <= ? and score >= ?");
+		PreparedStatement statement = connect.prepareStatement("select * from vokabeln where score <= ? and score >= ? order by score");
 		statement.setInt(1, smax);
 		statement.setInt(2, smin);
 		
