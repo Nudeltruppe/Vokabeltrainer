@@ -99,6 +99,9 @@ public class Database extends Thread
 			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
 		}
 		
+		rs.close();
+		statement.close();
+		
 		return vokabeln;
 	}
 }
