@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/reflex-1.0-20230205.213229-18.jar"/>
 	<classpathentry kind="lib" path="libs/starlight-1.0-20230205.213509-11.jar"/>
+	<classpathentry kind="lib" path="libs/sqlite-jdbc-3.41.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
