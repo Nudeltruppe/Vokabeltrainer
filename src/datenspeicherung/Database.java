@@ -1,20 +1,16 @@
 package datenspeicherung;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import utils.FileUtils;
+import java.util.ArrayList;
 
 public class Database extends Thread
 {
@@ -87,5 +83,22 @@ public class Database extends Thread
 
 		statement.executeUpdate();
 		statement.close();
+	}
+
+	public ArrayList<Vokabel> loadVokabeln(int smin, int smax) throws SQLException
+	{
+		ArrayList<Vokabel> vokabeln = new ArrayList<>();
+		
+		PreparedStatement statement = connect.prepareStatement("select * from vokabeln where score <= ? and score >= ?");
+		statement.setInt(1, smax);
+		statement.setInt(2, smin);
+		
+		ResultSet rs = statement.executeQuery();
+		while (rs.next())
+		{
+			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
+		}
+		
+		return vokabeln;
 	}
 }
