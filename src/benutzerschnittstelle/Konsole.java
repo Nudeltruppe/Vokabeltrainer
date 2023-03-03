@@ -39,6 +39,10 @@ public class Konsole
 		for (Vokabel v : vokabel_pipeline.compute(voc))
 		{
 			System.out.println(v);
+			System.out.println(v.getPercentage());
 		}
+		
+		Vokabel vc = new Vokabel(0, null, null, 50, 0, 0, null);
+		System.out.println(vc.getPercentage());
 	}
 }
