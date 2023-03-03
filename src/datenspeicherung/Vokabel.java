@@ -59,4 +59,18 @@ public class Vokabel extends StarlightAutoToString
 	{
 		return notes;
 	}
+	
+	public int getPercentageDone()
+	{
+		return (int)Math.min(Math.max(0.0, llsf(this.score)*2), 100.0);
+	}
+	
+	// linear logarithmic scaling function. caps at 50
+	private double llsf(int score) {
+		if (score <= 40) {
+			return (double)score;
+		} else {
+			return 2 * Math.log(((double)score)-40.3333) + 41;
+		}
+	}
 }
