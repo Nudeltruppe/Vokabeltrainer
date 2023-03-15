@@ -10,8 +10,7 @@ import fachkonzept.VokabelPartition;
 import fachkonzept.VokabelPartitionShuffle;
 import fachkonzept.VokabelSchuffle;
 import fachkonzept.VokabelSelect;
-import gq.glowman554.pipeline.PipelineManager;
-import gq.glowman554.pipeline.PipelineStep;
+import gq.glowman554.pipeline.ComputePipe;
 
 public class Konsole
 {
@@ -27,7 +26,7 @@ public class Konsole
 		}
 		*/
 		
-		PipelineManager<ArrayList<Vokabel>, ArrayList<Vokabel>> vokabel_pipeline = new PipelineManager<>();
+		ComputePipe<ArrayList<Vokabel>, ArrayList<Vokabel>> vokabel_pipeline = new ComputePipe<>();
 
 		vokabel_pipeline.addStep(new VokabelPartition());
 		vokabel_pipeline.addStep(new VokabelPartitionShuffle());

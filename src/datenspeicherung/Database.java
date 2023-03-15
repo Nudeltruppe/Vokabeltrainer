@@ -104,4 +104,15 @@ public class Database extends Thread
 		
 		return vokabeln;
 	}
+
+	public void updateScore(int id, int score) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("update vokabeln set score = ? where id = ?");
+
+		statement.setInt(1, score);
+		statement.setInt(2, id);
+		
+		statement.executeUpdate();
+		statement.close();
+	}
 }

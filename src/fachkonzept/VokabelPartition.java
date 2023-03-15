@@ -3,9 +3,9 @@ package fachkonzept;
 import java.util.ArrayList;
 
 import datenspeicherung.Vokabel;
-import gq.glowman554.pipeline.PipelineStep;
+import gq.glowman554.pipeline.CoputeStep;
 
-public class VokabelPartition implements PipelineStep<ArrayList<Vokabel>, ArrayList<ArrayList<Vokabel>>>
+public class VokabelPartition implements CoputeStep<ArrayList<Vokabel>, ArrayList<ArrayList<Vokabel>>>
 {
 	private final int partitions = 5;
 

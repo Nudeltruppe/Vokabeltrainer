@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import datenspeicherung.Vokabel;
-import gq.glowman554.pipeline.PipelineStep;
+import gq.glowman554.pipeline.CoputeStep;
 
-public class VokabelSchuffle implements PipelineStep<ArrayList<Vokabel>, ArrayList<Vokabel>>
+public class VokabelSchuffle implements CoputeStep<ArrayList<Vokabel>, ArrayList<Vokabel>>
 {
 
 	@Override
