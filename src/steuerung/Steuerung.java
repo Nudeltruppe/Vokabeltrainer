@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import benutzerschnittstelle.Benutzerschnittstelle;
+import benutzerschnittstelle.BenutzerschnittstelleV2;
 import benutzerschnittstelle.event.FinishTrainEvent;
 import datenspeicherung.Database;
 import datenspeicherung.Vokabel;
@@ -18,13 +18,13 @@ import gq.glowman554.starlight.annotations.StarlightEventTarget;
 public class Steuerung
 {
 
-	private final Benutzerschnittstelle benutzerschnittstelle;
+	private final BenutzerschnittstelleV2 benutzerschnittstelle;
 	private ComputePipe<ArrayList<Vokabel>, ArrayList<Vokabel>> vokabel_pipeline = new ComputePipe<>();
 
 	private ArrayList<Vokabel> current;
 	private int idx;
 
-	public Steuerung(Benutzerschnittstelle benutzerschnittstelle) throws IOException, SQLException
+	public Steuerung(BenutzerschnittstelleV2 benutzerschnittstelle) throws IOException, SQLException
 	{
 		this.benutzerschnittstelle = benutzerschnittstelle;
 

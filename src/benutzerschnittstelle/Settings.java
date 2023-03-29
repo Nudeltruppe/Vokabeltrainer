@@ -77,7 +77,7 @@ public class Settings extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				try
 				{
-					new Benutzerschnittstelle(Integer.parseInt(txtNumVoc.getText())).setVisible(true);
+					new BenutzerschnittstelleV2(Integer.parseInt(txtNumVoc.getText())).setVisible(true);
 					setVisible(false);
 				}
 				catch (NumberFormatException | IOException | SQLException e1)
