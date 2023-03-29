@@ -16,7 +16,7 @@ import gq.glowman554.starlight.annotations.StarlightEventTarget;
 
 public class Steuerung
 {
-	
+
 	private final Benutzerschnittstelle benutzerschnittstelle;
 	private Database db;
 	private ComputePipe<ArrayList<Vokabel>, ArrayList<Vokabel>> vokabel_pipeline = new ComputePipe<>();
@@ -33,8 +33,6 @@ public class Steuerung
 		vokabel_pipeline.addStep(new VokabelPartitionShuffle());
 		vokabel_pipeline.addStep(new VokabelSelect());
 		vokabel_pipeline.addStep(new VokabelSchuffle());
-
-		update();
 	}
 
 	@StarlightEventTarget
@@ -55,7 +53,7 @@ public class Steuerung
 		}
 
 		System.out.println("New score " + score);
-		
+
 		try
 		{
 			db.updateScore(c.getId(), score);
@@ -67,31 +65,31 @@ public class Steuerung
 		}
 	}
 
-	private void fillVokabeln() throws SQLException
+	public void fillVokabeln(int batch) throws SQLException
 	{
-		ArrayList<Vokabel> voc = db.loadVokabeln(-1000, 1000);
-
-		current = vokabel_pipeline.compute(voc);
+		current = new ArrayList<>();
 		idx = 0;
 
-		for (var v : current)
+
+		while (true)
 		{
-			System.out.println("Selected " + v.getQuestion() + " to learn with answer " + v.getAnswer());
+			ArrayList<Vokabel> voc = db.loadVokabeln(-1000, 1000);
+			var idk = vokabel_pipeline.compute(voc);
+
+			for (var v : idk)
+			{
+				System.out.println("Selected " + v.getQuestion() + " to learn with answer " + v.getAnswer());
+				current.add(v);
+				if (current.size() >= batch)
+				{
+					return;
+				}
+			}
 		}
 	}
 
-	private void update() throws SQLException
+	public void update() throws SQLException
 	{
-		if (current == null)
-		{
-			fillVokabeln();
-		}
-
-		if (idx >= current.size())
-		{
-			fillVokabeln();
-		}
-
 		benutzerschnittstelle.onTrain(current.get(idx++));
 	}
 }

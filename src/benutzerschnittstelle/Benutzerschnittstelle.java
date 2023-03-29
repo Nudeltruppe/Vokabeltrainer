@@ -91,6 +91,8 @@ public class Benutzerschnittstelle extends JFrame
 		getContentPane().add(this.messageLabel);
 		
 		steuerung = new Steuerung(this);
+		steuerung.fillVokabeln(30);
+		steuerung.update();
 	}
 
 	public void onTrain(Vokabel voc)
