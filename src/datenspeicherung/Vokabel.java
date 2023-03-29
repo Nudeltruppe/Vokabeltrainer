@@ -7,6 +7,7 @@ public class Vokabel extends StarlightAutoToString
 	private final int id;
 	private final String question;
 	private final String answer;
+	private final String category;
 	private final int score;
 	
 	private final int audio_id;
@@ -14,11 +15,12 @@ public class Vokabel extends StarlightAutoToString
 	
 	private final String notes;
 	
-	public Vokabel(int id, String question, String answer, int score, int audio_id, int image_id, String notes)
+	public Vokabel(int id, String question, String answer, String category, int score, int audio_id, int image_id, String notes)
 	{
 		this.id = id;
 		this.question = question;
 		this.answer = answer;
+		this.category = category;
 		this.score = score;
 		this.audio_id = audio_id;
 		this.image_id = image_id;
@@ -38,6 +40,11 @@ public class Vokabel extends StarlightAutoToString
 	public String getAnswer()
 	{
 		return answer;
+	}
+	
+	public String getCategory()
+	{
+		return category;
 	}
 	
 	public int getScore()

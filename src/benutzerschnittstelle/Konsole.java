@@ -41,7 +41,7 @@ public class Konsole
 			System.out.println(v.getPercentage());
 		}
 		
-		Vokabel vc = new Vokabel(0, null, null, 50, 0, 0, null);
+		Vokabel vc = new Vokabel(0, null, null, null, 50, 0, 0, null);
 		System.out.println(vc.getPercentage());
 	}
 }

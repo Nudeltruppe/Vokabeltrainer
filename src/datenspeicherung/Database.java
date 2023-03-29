@@ -66,20 +66,21 @@ public class Database extends Thread
 		}
 	}
 
-	public void insertVokabel(String answer, String question) throws SQLException
+	public void insertVokabel(String answer, String question, String category) throws SQLException
 	{
-		insertVokabel(answer, question, -1, -1, null);
+		insertVokabel(answer, question, category, -1, -1, null);
 	}
 
-	public void insertVokabel(String answer, String question, int audio_id, int image_id, String notes) throws SQLException
+	public void insertVokabel(String answer, String question, String category, int audio_id, int image_id, String notes) throws SQLException
 	{
-		PreparedStatement statement = connect.prepareStatement("insert into vokabeln (answer, question, audio_id, image_id, notes, score) values (?, ?, ?, ?, ?, 0)");
+		PreparedStatement statement = connect.prepareStatement("insert into vokabeln (answer, question, category, audio_id, image_id, notes, score) values (?, ?, ?, ?, ?, ?, 0)");
 
 		statement.setString(1, answer);
 		statement.setString(2, question);
-		statement.setInt(3, audio_id);
-		statement.setInt(4, image_id);
-		statement.setString(5, notes);
+		statement.setString(3, category);
+		statement.setInt(4, audio_id);
+		statement.setInt(5, image_id);
+		statement.setString(6, notes);
 
 		statement.executeUpdate();
 		statement.close();
@@ -96,7 +97,7 @@ public class Database extends Thread
 		ResultSet rs = statement.executeQuery();
 		while (rs.next())
 		{
-			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
+			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getString("category"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
 		}
 		
 		rs.close();
