@@ -16,7 +16,6 @@ public class Konsole
 {
 	public static void main(String[] args) throws IOException, SQLException
 	{
-		Database db = new Database();
 		// db.insertVokabel("test", "test123");
 		/*
 		ArrayList<Vokabel> vokabeln = db.loadVokabeln(-1, 1);
@@ -33,7 +32,7 @@ public class Konsole
 		vokabel_pipeline.addStep(new VokabelSelect());
 		vokabel_pipeline.addStep(new VokabelSchuffle());
 		
-		ArrayList<Vokabel> voc = db.loadVokabeln(-1000, 1000);
+		ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000);
 		
 		for (Vokabel v : vokabel_pipeline.compute(voc))
 		{

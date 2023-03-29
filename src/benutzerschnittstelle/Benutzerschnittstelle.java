@@ -6,7 +6,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import benutzerschnittstelle.event.FinishTrainEvent;
 import datenspeicherung.Vokabel;
+import gq.glowman554.starlight.StarlightEventManager;
+import gq.glowman554.starlight.annotations.StarlightEventTarget;
 import steuerung.Steuerung;
 
 import java.awt.event.ActionListener;
@@ -30,33 +34,11 @@ public class Benutzerschnittstelle extends JFrame
 	private JLabel messageLabel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					Benutzerschnittstelle frame = new Benutzerschnittstelle();
-					frame.setVisible(true);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 * @throws SQLException 
 	 * @throws IOException 
 	 */
-	public Benutzerschnittstelle() throws IOException, SQLException
+	public Benutzerschnittstelle(int ammount) throws IOException, SQLException
 	{
 		setTitle("Vokabeltrainer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +61,15 @@ public class Benutzerschnittstelle extends JFrame
 		this.submitButton = new JButton("New button");
 		this.submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				steuerung.onSubmit(current, answerField.getText());
+				try
+				{
+					steuerung.onSubmit(current, answerField.getText());
+				}
+				catch (IOException e1)
+				{
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
@@ -90,8 +80,10 @@ public class Benutzerschnittstelle extends JFrame
 		this.messageLabel.setBounds(53, 231, 359, 14);
 		getContentPane().add(this.messageLabel);
 		
+		StarlightEventManager.register(this);
+		
 		steuerung = new Steuerung(this);
-		steuerung.fillVokabeln(30);
+		steuerung.fillVokabeln(ammount);
 		steuerung.update();
 	}
 
@@ -104,6 +96,12 @@ public class Benutzerschnittstelle extends JFrame
 	public void onMessage(String m)
 	{
 		messageLabel.setText(m);
+	}
+	
+	@StarlightEventTarget
+	public void onFinishTrain(FinishTrainEvent e)
+	{
+		dispose();
 	}
 	
 	private void update()
