@@ -14,10 +14,21 @@ import java.util.ArrayList;
 
 public class Database extends Thread
 {
+	private static Database instance = null;
+
+	public static Database getInstance() throws IOException, SQLException
+	{
+		if (instance == null)
+		{
+			instance = new Database();
+		}
+		return instance;
+	}
+
 	private String db_path = "vokabeln.sqlit";
 	private Connection connect = null;
 
-	public Database() throws IOException, SQLException
+	private Database() throws IOException, SQLException
 	{
 		createIfNecesary();
 
@@ -89,20 +100,20 @@ public class Database extends Thread
 	public ArrayList<Vokabel> loadVokabeln(int smin, int smax) throws SQLException
 	{
 		ArrayList<Vokabel> vokabeln = new ArrayList<>();
-		
+
 		PreparedStatement statement = connect.prepareStatement("select * from vokabeln where score <= ? and score >= ? order by score");
 		statement.setInt(1, smax);
 		statement.setInt(2, smin);
-		
+
 		ResultSet rs = statement.executeQuery();
 		while (rs.next())
 		{
 			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getString("category"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
 		}
-		
+
 		rs.close();
 		statement.close();
-		
+
 		return vokabeln;
 	}
 
@@ -112,7 +123,7 @@ public class Database extends Thread
 
 		statement.setInt(1, score);
 		statement.setInt(2, id);
-		
+
 		statement.executeUpdate();
 		statement.close();
 	}

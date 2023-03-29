@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import benutzerschnittstelle.Benutzerschnittstelle;
+import benutzerschnittstelle.BenutzerschnittstelleV2;
+import benutzerschnittstelle.event.FinishTrainEvent;
 import datenspeicherung.Database;
 import datenspeicherung.Vokabel;
 import fachkonzept.VokabelPartition;
@@ -16,29 +17,25 @@ import gq.glowman554.starlight.annotations.StarlightEventTarget;
 
 public class Steuerung
 {
-	
-	private final Benutzerschnittstelle benutzerschnittstelle;
-	private Database db;
+
+	private final BenutzerschnittstelleV2 benutzerschnittstelle;
 	private ComputePipe<ArrayList<Vokabel>, ArrayList<Vokabel>> vokabel_pipeline = new ComputePipe<>();
 
 	private ArrayList<Vokabel> current;
 	private int idx;
 
-	public Steuerung(Benutzerschnittstelle benutzerschnittstelle) throws IOException, SQLException
+	public Steuerung(BenutzerschnittstelleV2 benutzerschnittstelle) throws IOException, SQLException
 	{
 		this.benutzerschnittstelle = benutzerschnittstelle;
-		db = new Database();
 
 		vokabel_pipeline.addStep(new VokabelPartition());
 		vokabel_pipeline.addStep(new VokabelPartitionShuffle());
 		vokabel_pipeline.addStep(new VokabelSelect());
 		vokabel_pipeline.addStep(new VokabelSchuffle());
-
-		update();
 	}
 
 	@StarlightEventTarget
-	public void onSubmit(Vokabel c, String a)
+	public void onSubmit(Vokabel c, String a) throws IOException
 	{
 		// TODO implement & fine tune this
 
@@ -55,10 +52,10 @@ public class Steuerung
 		}
 
 		System.out.println("New score " + score);
-		
+
 		try
 		{
-			db.updateScore(c.getId(), score);
+			Database.getInstance().updateScore(c.getId(), score);
 			update();
 		}
 		catch (SQLException e1)
@@ -67,31 +64,37 @@ public class Steuerung
 		}
 	}
 
-	private void fillVokabeln() throws SQLException
+	public void fillVokabeln(int batch) throws SQLException, IOException
 	{
-		ArrayList<Vokabel> voc = db.loadVokabeln(-1000, 1000);
-
-		current = vokabel_pipeline.compute(voc);
+		current = new ArrayList<>();
 		idx = 0;
 
-		for (var v : current)
+		while (true)
 		{
-			System.out.println("Selected " + v.getQuestion() + " to learn with answer " + v.getAnswer());
+			ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000);
+			var idk = vokabel_pipeline.compute(voc);
+
+			for (var v : idk)
+			{
+				System.out.println("Selected " + v.getQuestion() + " to learn with answer " + v.getAnswer());
+				current.add(v);
+				if (current.size() >= batch)
+				{
+					return;
+				}
+			}
 		}
 	}
 
-	private void update() throws SQLException
+	public void update() throws SQLException
 	{
-		if (current == null)
-		{
-			fillVokabeln();
-		}
-
 		if (idx >= current.size())
 		{
-			fillVokabeln();
+			new FinishTrainEvent().call();
 		}
-
-		benutzerschnittstelle.onTrain(current.get(idx++));
+		else
+		{
+			benutzerschnittstelle.onTrain(current.get(idx++));
+		}
 	}
 }
