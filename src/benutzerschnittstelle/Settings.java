@@ -26,9 +26,7 @@ public class Settings extends JFrame
 	private JTextField txtNumVoc;
 	private JButton btnStart;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args)
 	{
 		EventQueue.invokeLater(new Runnable()
@@ -48,9 +46,7 @@ public class Settings extends JFrame
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public Settings()
 	{
 		StarlightEventManager.register(this);
@@ -63,12 +59,12 @@ public class Settings extends JFrame
 		this.contentPane.setLayout(null);
 		
 		this.lblNewLabel = new JLabel("Vokabeln zum lernen:");
-		this.lblNewLabel.setBounds(10, 11, 120, 14);
+		this.lblNewLabel.setBounds(10, 11, 146, 14);
 		this.contentPane.add(this.lblNewLabel);
 		
 		this.txtNumVoc = new JTextField();
 		this.txtNumVoc.setText("30");
-		this.txtNumVoc.setBounds(140, 8, 86, 20);
+		this.txtNumVoc.setBounds(153, 8, 86, 20);
 		this.contentPane.add(this.txtNumVoc);
 		this.txtNumVoc.setColumns(10);
 		

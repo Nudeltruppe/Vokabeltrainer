@@ -45,7 +45,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		wordPanel.add(question);
 		JPanel definitionPanel = new JPanel(new FlowLayout());
 		answer = new JLabel();
-		definitionPanel.add(new JLabel("Message:"));
+		definitionPanel.add(new JLabel("Antwort: "));
 		definitionPanel.add(answer);
 		studyPanel.add(wordPanel);
 		studyPanel.add(definitionPanel);

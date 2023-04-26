@@ -48,7 +48,7 @@ public class Steuerung
 		else
 		{
 			score -= 3;
-			benutzerschnittstelle.onMessage("Falsch! Solte " + c.getAnswer() + " gewesen sein!");
+			benutzerschnittstelle.onMessage("Falsch! Richtige Antwort: " + c.getAnswer());
 		}
 
 		System.out.println("New score " + score);
