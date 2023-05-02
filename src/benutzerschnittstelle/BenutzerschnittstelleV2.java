@@ -1,13 +1,16 @@
 package benutzerschnittstelle;
 
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -16,10 +19,6 @@ import datenspeicherung.Vokabel;
 import gq.glowman554.starlight.StarlightEventManager;
 import gq.glowman554.starlight.annotations.StarlightEventTarget;
 import steuerung.Steuerung;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
 public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 {
@@ -62,9 +61,9 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		setSize(400, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		
+
 		StarlightEventManager.register(this);
-		
+
 		steuerung = new Steuerung(this);
 		steuerung.fillVokabeln(ammount);
 		steuerung.update();
@@ -82,24 +81,24 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 			e1.printStackTrace();
 		}
 	}
-	
+
 	public void onTrain(Vokabel voc)
 	{
 		current = voc;
 		update();
 	}
-	
+
 	public void onMessage(String m)
 	{
 		answer.setText(m);
 	}
-	
+
 	@StarlightEventTarget
 	public void onFinishTrain(FinishTrainEvent e)
 	{
 		dispose();
 	}
-	
+
 	private void update()
 	{
 		question.setText(current.getQuestion());

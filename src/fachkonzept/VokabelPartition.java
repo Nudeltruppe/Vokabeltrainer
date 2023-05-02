@@ -26,7 +26,7 @@ public class VokabelPartition implements CoputeStep<ArrayList<Vokabel>, ArrayLis
 			}
 			ret.add(partition);
 		}
-		
+
 		// TODO check if array is actually empty
 
 		return ret;

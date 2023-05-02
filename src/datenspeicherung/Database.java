@@ -127,4 +127,27 @@ public class Database extends Thread
 		statement.executeUpdate();
 		statement.close();
 	}
+
+	public void update(int id, String question, String answer, String category) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("update vokabeln set question = ?, answer = ?, category = ? where id = ?");
+
+		statement.setString(1, question);
+		statement.setString(2, answer);
+		statement.setString(3, category);
+		statement.setInt(4, id);
+
+		statement.executeUpdate();
+		statement.close();
+	}
+
+	public void delete(int id) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("delete from vokabeln where id = ?");
+
+		statement.setInt(1, id);
+
+		statement.executeUpdate();
+		statement.close();
+	}
 }

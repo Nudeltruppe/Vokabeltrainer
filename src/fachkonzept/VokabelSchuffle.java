@@ -22,7 +22,7 @@ public class VokabelSchuffle implements CoputeStep<ArrayList<Vokabel>, ArrayList
 			input.set(p2, tmp);
 
 		}
-		
+
 		return input;
 	}
 

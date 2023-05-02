@@ -18,14 +18,14 @@ public class VokabelPartitionShuffle implements CoputeStep<ArrayList<ArrayList<V
 			{
 				int p1 = ThreadLocalRandom.current().nextInt(partition.size());
 				int p2 = ThreadLocalRandom.current().nextInt(partition.size());
-				
+
 				Vokabel tmp = partition.get(p1);
 				partition.set(p1, partition.get(p2));
 				partition.set(p2, tmp);
-				
+
 			}
 		}
-		
+
 		return input;
 	}
 
