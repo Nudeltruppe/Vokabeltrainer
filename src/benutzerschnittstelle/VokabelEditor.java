@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import datenspeicherung.Database;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class VokabelEditor extends JFrame
 {
@@ -37,6 +40,8 @@ public class VokabelEditor extends JFrame
 	private JScrollPane scrollPane;
 	private JButton btnDelete;
 	private int selectedId = -1;
+	private JComboBox comboBox;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Launch the application.
@@ -87,7 +92,7 @@ public class VokabelEditor extends JFrame
 				try
 				{
 					// TODO implement
-					Database.getInstance().insertVokabel(txtAnswer.getText(), txtQuestion.getText(), "testing");
+					Database.getInstance().insertVokabel(txtAnswer.getText(), txtQuestion.getText(), getSelectedCategory());
 					update();
 				}
 				catch (SQLException | IOException e1)
@@ -106,7 +111,7 @@ public class VokabelEditor extends JFrame
 			{
 				try
 				{
-					Database.getInstance().update(selectedId, txtQuestion.getText(), txtAnswer.getText(), "testing");
+					Database.getInstance().update(selectedId, txtQuestion.getText(), txtAnswer.getText(), getSelectedCategory());
 					update();
 				}
 				catch (SQLException | IOException e1)
@@ -128,13 +133,13 @@ public class VokabelEditor extends JFrame
 		 */
 		this.table.setModel(new DefaultTableModel(new Object[][] {
 
-		}, new String[] {"Question", "Answer", "Id"})
+		}, new String[] {"Question", "Answer", "Category", "Id"})
 		{
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
-			Class<?>[] columnTypes = new Class[] {String.class, String.class, int.class};
+			Class<?>[] columnTypes = new Class[] {String.class, String.class, String.class, int.class};
 
 			public Class<?> getColumnClass(int columnIndex)
 			{
@@ -153,9 +158,12 @@ public class VokabelEditor extends JFrame
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				selectedId = (int) table.getValueAt(table.getSelectedRow(), 2);
+				selectedId = (int) table.getValueAt(table.getSelectedRow(), 3);
 				String question = (String) table.getValueAt(table.getSelectedRow(), 0);
 				String answer = (String) table.getValueAt(table.getSelectedRow(), 1);
+				String category = (String) table.getValueAt(table.getSelectedRow(), 2);
+				
+				((DefaultComboBoxModel) comboBox.getModel()).setSelectedItem(category);
 
 				txtQuestion.setText(question);
 				txtAnswer.setText(answer);
@@ -181,10 +189,30 @@ public class VokabelEditor extends JFrame
 		});
 		this.btnDelete.setBounds(335, 67, 89, 23);
 		this.contentPane.add(this.btnDelete);
+		
+		this.comboBox = new JComboBox();
+		this.comboBox.setModel(new DefaultComboBoxModel(new String[] {}));
+		this.comboBox.setBounds(66, 68, 253, 22);
+		this.contentPane.add(this.comboBox);
+		
+		this.lblNewLabel_2 = new JLabel("Category");
+		this.lblNewLabel_2.setBounds(10, 71, 46, 14);
+		this.contentPane.add(this.lblNewLabel_2);
 
 		update();
 	}
 
+	private String getSelectedCategory()
+	{
+		String selected = (String) ((DefaultComboBoxModel) comboBox.getModel()).getSelectedItem();
+		
+		if (selected.equals("--new--"))
+		{
+			return JOptionPane.showInputDialog(this, "New category name");
+		}
+		return selected;
+	}
+	
 	private void update() throws SQLException, IOException
 	{
 		while (((DefaultTableModel) this.table.getModel()).getRowCount() != 0)
@@ -196,7 +224,14 @@ public class VokabelEditor extends JFrame
 
 		for (int i = 0; i < voc.size(); i++)
 		{
-			((DefaultTableModel) this.table.getModel()).addRow(new Object[] {voc.get(i).getQuestion(), voc.get(i).getAnswer(), voc.get(i).getId()});
+			((DefaultTableModel) this.table.getModel()).addRow(new Object[] {voc.get(i).getQuestion(), voc.get(i).getAnswer(),  voc.get(i).getCategory(), voc.get(i).getId()});
+		}
+		
+		((DefaultComboBoxModel) this.comboBox.getModel()).removeAllElements();
+		((DefaultComboBoxModel) this.comboBox.getModel()).addElement("--new--");
+		for (var c : Database.getInstance().loadCategories())
+		{
+			((DefaultComboBoxModel) this.comboBox.getModel()).addElement(c);
 		}
 	}
 }

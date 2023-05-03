@@ -116,6 +116,24 @@ public class Database extends Thread
 
 		return vokabeln;
 	}
+	
+	public ArrayList<String> loadCategories() throws SQLException
+	{
+		ArrayList<String> categories = new ArrayList<>();
+		
+		PreparedStatement statement = connect.prepareStatement("select distinct category from vokabeln");
+		
+		ResultSet rs = statement.executeQuery();
+		while (rs.next())
+		{
+			categories.add(rs.getString("category"));
+		}
+			
+		rs.close();
+		statement.close();
+		
+		return categories;
+	}
 
 	public void updateScore(int id, int score) throws SQLException
 	{
