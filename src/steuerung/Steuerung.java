@@ -43,12 +43,12 @@ public class Steuerung
 		if (a.strip().equals(c.getAnswer().strip()))
 		{
 			score += 1;
-			benutzerschnittstelle.onMessage("Richtig!");
+			benutzerschnittstelle.onMessage("Richtig!", true);
 		}
 		else
 		{
 			score -= 3;
-			benutzerschnittstelle.onMessage("Falsch! Richtige Antwort: " + c.getAnswer());
+			benutzerschnittstelle.onMessage(c.getAnswer(), false);
 		}
 
 		System.out.println("New score " + score);
