@@ -64,14 +64,14 @@ public class Steuerung
 		}
 	}
 
-	public void fillVokabeln(int batch) throws SQLException, IOException
+	public void fillVokabeln(int batch, String category) throws SQLException, IOException
 	{
 		current = new ArrayList<>();
 		idx = 0;
 
 		while (true)
 		{
-			ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000);
+			ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000, category);
 			var idk = vokabel_pipeline.compute(voc);
 
 			for (var v : idk)

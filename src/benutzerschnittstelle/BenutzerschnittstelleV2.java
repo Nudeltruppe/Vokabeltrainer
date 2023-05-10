@@ -30,7 +30,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 	private Steuerung steuerung;
 	private Vokabel current = null;
 
-	public BenutzerschnittstelleV2(int ammount) throws IOException, SQLException
+	public BenutzerschnittstelleV2(int ammount, String category) throws IOException, SQLException
 	{
 		getContentPane().setLayout(new BorderLayout());
 
@@ -64,6 +64,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		stopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new FinishTrainEvent().call();
+				dispose();
 			}
 		});
 		controlPanel.add(stopButton);
@@ -75,7 +76,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		StarlightEventManager.register(this);
 
 		steuerung = new Steuerung(this);
-		steuerung.fillVokabeln(ammount);
+		steuerung.fillVokabeln(ammount, category);
 		steuerung.update();
 	}
 

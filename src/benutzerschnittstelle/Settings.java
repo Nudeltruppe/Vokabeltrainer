@@ -16,10 +16,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import benutzerschnittstelle.event.FinishTrainEvent;
+import datenspeicherung.Database;
 import gq.glowman554.starlight.StarlightEventManager;
 import gq.glowman554.starlight.annotations.StarlightEventTarget;
 import java.awt.GridLayout;
 import javax.swing.SpringLayout;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Settings extends JFrame
 {
@@ -30,6 +33,7 @@ public class Settings extends JFrame
 	private JButton btnStart;
 	private JButton btnEditor;
 	private JButton btnNewButton;
+	private JComboBox categorySelection;
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
@@ -51,7 +55,7 @@ public class Settings extends JFrame
 		});
 	}
 
-	public Settings()
+	public Settings() throws SQLException, IOException
 	{
 		StarlightEventManager.register(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,7 +117,7 @@ public class Settings extends JFrame
 			{
 				try
 				{
-					new BenutzerschnittstelleV2(Integer.parseInt(txtNumVoc.getText())).setVisible(true);
+					new BenutzerschnittstelleV2(Integer.parseInt(txtNumVoc.getText()), (String) ((DefaultComboBoxModel) categorySelection.getModel()).getSelectedItem()).setVisible(true);
 					setVisible(false);
 				}
 				catch (NumberFormatException | IOException | SQLException e1)
@@ -138,6 +142,15 @@ public class Settings extends JFrame
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNewButton, 266, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, btnNewButton, 439, SpringLayout.WEST, lblNewLabel);
 		contentPane.add(btnNewButton);
+		
+		this.categorySelection = new JComboBox();
+		this.categorySelection.setModel(new DefaultComboBoxModel(new String[] {}));
+		this.contentPane.add(this.categorySelection);
+		
+		for (var c : Database.getInstance().loadCategories())
+		{
+			((DefaultComboBoxModel) this.categorySelection.getModel()).addElement(c);
+		}
 	}
 
 	@StarlightEventTarget
