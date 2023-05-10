@@ -69,62 +69,70 @@ public class Settings extends JFrame
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel, 92, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, 225, SpringLayout.WEST, contentPane);
 		this.contentPane.add(this.lblNewLabel);
-		
-				this.btnEditor = new JButton("Vokabel Editor Öffnen");
-				sl_contentPane.putConstraint(SpringLayout.NORTH, btnEditor, 92, SpringLayout.NORTH, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.WEST, btnEditor, 5, SpringLayout.WEST, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.SOUTH, btnEditor, 179, SpringLayout.NORTH, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.EAST, btnEditor, 225, SpringLayout.WEST, contentPane);
-				this.btnEditor.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent e)
-					{
-						try
-						{
-							new VokabelEditor().setVisible(true);
-							setVisible(false);
-						}
-						catch (SQLException | IOException e1)
-						{
-							e1.printStackTrace();
-						}
 
-					}
-				});
-				
-						this.txtNumVoc = new JTextField();
-						sl_contentPane.putConstraint(SpringLayout.NORTH, txtNumVoc, 5, SpringLayout.NORTH, contentPane);
-						sl_contentPane.putConstraint(SpringLayout.WEST, txtNumVoc, 225, SpringLayout.WEST, contentPane);
-						sl_contentPane.putConstraint(SpringLayout.SOUTH, txtNumVoc, 92, SpringLayout.NORTH, contentPane);
-						sl_contentPane.putConstraint(SpringLayout.EAST, txtNumVoc, 445, SpringLayout.WEST, contentPane);
-						this.txtNumVoc.setText("30");
-						this.contentPane.add(this.txtNumVoc);
-						this.txtNumVoc.setColumns(10);
-				this.contentPane.add(this.btnEditor);
-		
-				this.btnStart = new JButton("START!");
-				sl_contentPane.putConstraint(SpringLayout.NORTH, btnStart, 92, SpringLayout.NORTH, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.WEST, btnStart, 225, SpringLayout.WEST, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.SOUTH, btnStart, 179, SpringLayout.NORTH, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.EAST, btnStart, 445, SpringLayout.WEST, contentPane);
-				this.btnStart.addActionListener(new ActionListener()
+		this.btnEditor = new JButton("Vokabel Editor Öffnen");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnEditor, 92, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnEditor, 5, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnEditor, 179, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnEditor, 225, SpringLayout.WEST, contentPane);
+		this.btnEditor.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				try
 				{
-					public void actionPerformed(ActionEvent e)
-					{
-						try
-						{
-							new BenutzerschnittstelleV2(Integer.parseInt(txtNumVoc.getText())).setVisible(true);
-							setVisible(false);
-						}
-						catch (NumberFormatException | IOException | SQLException e1)
-						{
-							e1.printStackTrace();
-						}
-					}
-				});
-				this.contentPane.add(this.btnStart);
-		
+					new VokabelEditor().setVisible(true);
+					setVisible(false);
+				}
+				catch (SQLException | IOException e1)
+				{
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		this.txtNumVoc = new JTextField();
+		sl_contentPane.putConstraint(SpringLayout.NORTH, txtNumVoc, 5, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, txtNumVoc, 225, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtNumVoc, 92, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, txtNumVoc, 445, SpringLayout.WEST, contentPane);
+		this.txtNumVoc.setText("30");
+		this.contentPane.add(this.txtNumVoc);
+		this.txtNumVoc.setColumns(10);
+		this.contentPane.add(this.btnEditor);
+
+		this.btnStart = new JButton("START!");
+		sl_contentPane.putConstraint(SpringLayout.NORTH, btnStart, 92, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.WEST, btnStart, 225, SpringLayout.WEST, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnStart, 179, SpringLayout.NORTH, contentPane);
+		sl_contentPane.putConstraint(SpringLayout.EAST, btnStart, 445, SpringLayout.WEST, contentPane);
+		this.btnStart.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					new BenutzerschnittstelleV2(Integer.parseInt(txtNumVoc.getText())).setVisible(true);
+					setVisible(false);
+				}
+				catch (NumberFormatException | IOException | SQLException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+		});
+		this.contentPane.add(this.btnStart);
+
 		btnNewButton = new JButton("Fortschritt");
+		this.btnNewButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				new FortschrittViewer().setVisible(true);
+				setVisible(false);
+			}
+		});
 		sl_contentPane.putConstraint(SpringLayout.NORTH, btnNewButton, 179, SpringLayout.NORTH, contentPane);
 		sl_contentPane.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, lblNewLabel);
 		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNewButton, 266, SpringLayout.NORTH, contentPane);
