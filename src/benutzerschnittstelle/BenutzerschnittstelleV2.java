@@ -31,6 +31,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 
 	public BenutzerschnittstelleV2(int ammount) throws IOException, SQLException
 	{
+		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
 
 		JPanel inputPanel = new JPanel(new FlowLayout());
