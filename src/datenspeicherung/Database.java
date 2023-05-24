@@ -168,4 +168,24 @@ public class Database extends Thread
 		statement.executeUpdate();
 		statement.close();
 	}
+
+	public ArrayList<Vokabel> loadVokabeln(int smin, int smax, String category) throws SQLException
+	{
+		ArrayList<Vokabel> vokabeln = new ArrayList<>();
+
+		PreparedStatement statement = connect.prepareStatement("select * from vokabeln where score <= ? and score >= ? and category = ? order by score");
+		statement.setInt(1, smax);
+		statement.setInt(2, smin);
+		statement.setString(3, category);
+
+		ResultSet rs = statement.executeQuery();
+		while (rs.next())
+		{
+			vokabeln.add(new Vokabel(rs.getInt("id"), rs.getString("question"), rs.getString("answer"), rs.getString("category"), rs.getInt("score"), rs.getInt("audio_id"), rs.getInt("image_id"), rs.getString("notes")));
+		}
+
+		rs.close();
+		statement.close();
+
+		return vokabeln;	}
 }

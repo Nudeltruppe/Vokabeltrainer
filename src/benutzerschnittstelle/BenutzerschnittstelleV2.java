@@ -19,35 +19,35 @@ import datenspeicherung.Vokabel;
 import gq.glowman554.starlight.StarlightEventManager;
 import gq.glowman554.starlight.annotations.StarlightEventTarget;
 import steuerung.Steuerung;
+import java.awt.Color;
 
 public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField txtAntwort;
 	private JButton nextButton;
 	private JLabel question, answer;
 	private Steuerung steuerung;
 	private Vokabel current = null;
 
-	public BenutzerschnittstelleV2(int ammount) throws IOException, SQLException
+	public BenutzerschnittstelleV2(int ammount, String category) throws IOException, SQLException
 	{
 		setResizable(false);
 		getContentPane().setLayout(new BorderLayout());
 
 		JPanel inputPanel = new JPanel(new FlowLayout());
-		textField = new JTextField(20);
-		inputPanel.add(textField);
 
 		JPanel studyPanel = new JPanel(new GridLayout(2, 1));
 		JPanel wordPanel = new JPanel(new FlowLayout());
 		question = new JLabel();
-		wordPanel.add(new JLabel("Question: "));
 		wordPanel.add(question);
 		JPanel definitionPanel = new JPanel(new FlowLayout());
 		answer = new JLabel();
-		definitionPanel.add(new JLabel("Antwort: "));
 		definitionPanel.add(answer);
 		studyPanel.add(wordPanel);
+		txtAntwort = new JTextField(20);
+		txtAntwort.setToolTipText("Antwort");
+		wordPanel.add(txtAntwort);
 		studyPanel.add(definitionPanel);
 
 		JPanel controlPanel = new JPanel(new FlowLayout());
@@ -56,8 +56,19 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		controlPanel.add(nextButton);
 
 		getContentPane().add(inputPanel, BorderLayout.NORTH);
+		JLabel label = new JLabel("Question: ");
+		inputPanel.add(label);
 		getContentPane().add(studyPanel, BorderLayout.CENTER);
 		getContentPane().add(controlPanel, BorderLayout.SOUTH);
+		
+		JButton stopButton = new JButton("Abbruch");
+		stopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new FinishTrainEvent().call();
+				dispose();
+			}
+		});
+		controlPanel.add(stopButton);
 
 		setSize(400, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +77,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		StarlightEventManager.register(this);
 
 		steuerung = new Steuerung(this);
-		steuerung.fillVokabeln(ammount);
+		steuerung.fillVokabeln(ammount, category);
 		steuerung.update();
 	}
 
@@ -74,7 +85,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 	{
 		try
 		{
-			steuerung.onSubmit(current, textField.getText());
+			steuerung.onSubmit(current, txtAntwort.getText());
 		}
 		catch (IOException e1)
 		{
@@ -89,8 +100,9 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 		update();
 	}
 
-	public void onMessage(String m)
+	public void onMessage(String m, boolean known)
 	{
+		answer.setForeground(known ? Color.GREEN : Color.RED);
 		answer.setText(m);
 	}
 
@@ -103,6 +115,6 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 	private void update()
 	{
 		question.setText(current.getQuestion());
-		textField.setText("");
+		txtAntwort.setText("");
 	}
 }

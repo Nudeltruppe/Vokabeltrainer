@@ -43,12 +43,12 @@ public class Steuerung
 		if (a.strip().equals(c.getAnswer().strip()))
 		{
 			score += 1;
-			benutzerschnittstelle.onMessage("Richtig!");
+			benutzerschnittstelle.onMessage("Richtig!", true);
 		}
 		else
 		{
 			score -= 3;
-			benutzerschnittstelle.onMessage("Falsch! Richtige Antwort: " + c.getAnswer());
+			benutzerschnittstelle.onMessage(c.getAnswer(), false);
 		}
 
 		System.out.println("New score " + score);
@@ -64,14 +64,14 @@ public class Steuerung
 		}
 	}
 
-	public void fillVokabeln(int batch) throws SQLException, IOException
+	public void fillVokabeln(int batch, String category) throws SQLException, IOException
 	{
 		current = new ArrayList<>();
 		idx = 0;
 
 		while (true)
 		{
-			ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000);
+			ArrayList<Vokabel> voc = Database.getInstance().loadVokabeln(-1000, 1000, category);
 			var idk = vokabel_pipeline.compute(voc);
 
 			for (var v : idk)
