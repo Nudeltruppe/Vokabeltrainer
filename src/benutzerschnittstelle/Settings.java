@@ -65,21 +65,14 @@ public class Settings extends JFrame
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(this.contentPane);
-		SpringLayout sl_contentPane = new SpringLayout();
-		contentPane.setLayout(sl_contentPane);
+		contentPane.setLayout(null);
 
 		this.lblNewLabel = new JLabel("Vokabeln zum lernen:");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblNewLabel, 5, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblNewLabel, 5, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, lblNewLabel, 92, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, lblNewLabel, 225, SpringLayout.WEST, contentPane);
+		lblNewLabel.setBounds(15, 34, 115, 38);
 		this.contentPane.add(this.lblNewLabel);
 
 		this.btnEditor = new JButton("Vokabel Editor Öffnen");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnEditor, 92, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnEditor, 5, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnEditor, 179, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnEditor, 225, SpringLayout.WEST, contentPane);
+		btnEditor.setBounds(10, 135, 183, 87);
 		this.btnEditor.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -98,20 +91,14 @@ public class Settings extends JFrame
 		});
 
 		this.txtNumVoc = new JTextField();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, txtNumVoc, 5, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, txtNumVoc, 225, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, txtNumVoc, 92, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, txtNumVoc, 445, SpringLayout.WEST, contentPane);
+		txtNumVoc.setBounds(122, 38, 108, 30);
 		this.txtNumVoc.setText("30");
 		this.contentPane.add(this.txtNumVoc);
 		this.txtNumVoc.setColumns(10);
 		this.contentPane.add(this.btnEditor);
 
 		this.btnStart = new JButton("START!");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnStart, 92, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnStart, 225, SpringLayout.WEST, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnStart, 179, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnStart, 445, SpringLayout.WEST, contentPane);
+		btnStart.setBounds(262, 10, 145, 87);
 		this.btnStart.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -130,6 +117,7 @@ public class Settings extends JFrame
 		this.contentPane.add(this.btnStart);
 
 		btnNewButton = new JButton("Fortschritt");
+		btnNewButton.setBounds(203, 135, 220, 87);
 		this.btnNewButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -138,13 +126,10 @@ public class Settings extends JFrame
 				setVisible(false);
 			}
 		});
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnNewButton, 179, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnNewButton, 0, SpringLayout.WEST, lblNewLabel);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnNewButton, 266, SpringLayout.NORTH, contentPane);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnNewButton, 439, SpringLayout.WEST, lblNewLabel);
 		contentPane.add(btnNewButton);
 		
 		this.categorySelection = new JComboBox();
+		categorySelection.setBounds(132, 75, 82, 22);
 		this.categorySelection.setModel(new DefaultComboBoxModel(new String[] {}));
 		this.contentPane.add(this.categorySelection);
 		
