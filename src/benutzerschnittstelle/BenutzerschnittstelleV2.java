@@ -32,33 +32,37 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 
 	public BenutzerschnittstelleV2(int ammount, String category) throws IOException, SQLException
 	{
-		getContentPane().setLayout(new BorderLayout());
+		setResizable(false);
 
 		JPanel inputPanel = new JPanel(new FlowLayout());
+		inputPanel.setBounds(0, 0, 384, 24);
 
 		JPanel studyPanel = new JPanel(new GridLayout(2, 1));
+		studyPanel.setBounds(0, 24, 384, 104);
 		JPanel wordPanel = new JPanel(new FlowLayout());
 		question = new JLabel();
 		wordPanel.add(question);
 		JPanel definitionPanel = new JPanel(new FlowLayout());
+		txtAntwort = new JTextField(20);
+		definitionPanel.add(txtAntwort);
+		txtAntwort.setToolTipText("Antwort");
 		answer = new JLabel();
 		definitionPanel.add(answer);
 		studyPanel.add(wordPanel);
-		txtAntwort = new JTextField(20);
-		txtAntwort.setToolTipText("Antwort");
-		wordPanel.add(txtAntwort);
 		studyPanel.add(definitionPanel);
 
 		JPanel controlPanel = new JPanel(new FlowLayout());
+		controlPanel.setBounds(0, 128, 384, 33);
 		nextButton = new JButton("Next");
 		nextButton.addActionListener(this);
 		controlPanel.add(nextButton);
+		getContentPane().setLayout(null);
 
-		getContentPane().add(inputPanel, BorderLayout.NORTH);
+		getContentPane().add(inputPanel);
 		JLabel label = new JLabel("Question: ");
 		inputPanel.add(label);
-		getContentPane().add(studyPanel, BorderLayout.CENTER);
-		getContentPane().add(controlPanel, BorderLayout.SOUTH);
+		getContentPane().add(studyPanel);
+		getContentPane().add(controlPanel);
 		
 		JButton stopButton = new JButton("Abbruch");
 		stopButton.addActionListener(new ActionListener() {
