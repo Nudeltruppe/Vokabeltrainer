@@ -8,7 +8,7 @@ public class Vokabel extends StarlightAutoToString
 	private final String question;
 	private final String answer;
 	private final String category;
-	private final int score;
+	private int score;
 
 	private final int audio_id;
 	private final int image_id;
@@ -70,6 +70,11 @@ public class Vokabel extends StarlightAutoToString
 	public double getPercentage()
 	{
 		return Math.min(Math.max(0.0, llsf(this.score) * 2), 100.0);
+	}
+
+	public void setScore(int score)
+	{
+		this.score = score;
 	}
 
 	// linear logarithmic scaling function. caps at 50

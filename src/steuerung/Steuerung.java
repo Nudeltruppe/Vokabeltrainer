@@ -42,20 +42,21 @@ public class Steuerung
 		int score = c.getScore();
 		if (a.strip().equals(c.getAnswer().strip()))
 		{
-			score += 1;
+			c.setScore(score + 1);
 			benutzerschnittstelle.onMessage("Richtig!", true);
 		}
 		else
 		{
-			score -= 3;
+			c.setScore(score - 3);
 			benutzerschnittstelle.onMessage(c.getAnswer(), false);
+			current.add(c);
 		}
 
-		System.out.println("New score " + score);
+		System.out.println("New score " + c.getScore());
 
 		try
 		{
-			Database.getInstance().updateScore(c.getId(), score);
+			Database.getInstance().updateScore(c.getId(), c.getScore());
 			update();
 		}
 		catch (SQLException e1)
