@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Database extends Thread
 {
@@ -82,8 +83,17 @@ public class Database extends Thread
 		insertVokabel(answer, question, category, -1, -1, null);
 	}
 
+	public void insertCategory(String category) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("insert or ignore into category (category) values (?)");
+		statement.setString(1, category);
+		statement.executeUpdate();
+		statement.close();
+	}
+
 	public void insertVokabel(String answer, String question, String category, int audio_id, int image_id, String notes) throws SQLException
 	{
+		insertCategory(category);
 		PreparedStatement statement = connect.prepareStatement("insert into vokabeln (answer, question, category, audio_id, image_id, notes, score) values (?, ?, ?, ?, ?, ?, 0)");
 
 		statement.setString(1, answer);
@@ -116,22 +126,22 @@ public class Database extends Thread
 
 		return vokabeln;
 	}
-	
+
 	public ArrayList<String> loadCategories() throws SQLException
 	{
 		ArrayList<String> categories = new ArrayList<>();
-		
-		PreparedStatement statement = connect.prepareStatement("select distinct category from vokabeln");
-		
+
+		PreparedStatement statement = connect.prepareStatement("select category from category");
+
 		ResultSet rs = statement.executeQuery();
 		while (rs.next())
 		{
 			categories.add(rs.getString("category"));
 		}
-			
+
 		rs.close();
 		statement.close();
-		
+
 		return categories;
 	}
 
@@ -148,6 +158,7 @@ public class Database extends Thread
 
 	public void update(int id, String question, String answer, String category) throws SQLException
 	{
+		insertCategory(category);
 		PreparedStatement statement = connect.prepareStatement("update vokabeln set question = ?, answer = ?, category = ? where id = ?");
 
 		statement.setString(1, question);
@@ -187,5 +198,26 @@ public class Database extends Thread
 		rs.close();
 		statement.close();
 
-		return vokabeln;	}
+		return vokabeln;
+	}
+
+	public Date lastLearned(String category) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("select last_learned from category where category = ?");
+		statement.setString(1, category);
+		ResultSet rs = statement.executeQuery();
+		rs.next();
+		Date ret = rs.getDate("last_learned");
+		rs.close();
+		statement.close();
+		return ret;
+	}
+
+	public void setLastLearned(String category) throws SQLException
+	{
+		PreparedStatement statement = connect.prepareStatement("update category set last_learned = datetime('now') where category = ?");
+		statement.setString(1, category);
+		statement.executeUpdate();
+		statement.close();
+	}
 }

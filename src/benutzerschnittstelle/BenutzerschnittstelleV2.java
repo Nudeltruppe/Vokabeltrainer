@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import benutzerschnittstelle.event.FinishTrainEvent;
+import datenspeicherung.Database;
 import datenspeicherung.Vokabel;
 import gq.glowman554.starlight.StarlightEventManager;
 import gq.glowman554.starlight.annotations.StarlightEventTarget;
@@ -32,6 +33,7 @@ public class BenutzerschnittstelleV2 extends JFrame implements ActionListener
 
 	public BenutzerschnittstelleV2(int ammount, String category) throws IOException, SQLException
 	{
+		Database.getInstance().setLastLearned(category);
 		setResizable(false);
 
 		JPanel inputPanel = new JPanel(new FlowLayout());

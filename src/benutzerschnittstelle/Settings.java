@@ -34,6 +34,17 @@ public class Settings extends JFrame
 	private JButton btnEditor;
 	private JButton btnNewButton;
 	private JComboBox categorySelection;
+	
+	// TODO:
+	// Als Lerner möchte ich zu Vokabeln Audioaufnahmen verwalten, um mir die Aussprache anzuhören und mit mehreren Sinnen zu lernen.
+	// Als Lerner möchte ich zu Vokabeln Abbildungen verwalten, um mit mehreren Sinnen zu lernen.
+	// Als Lerner möchte ich Vokabeln suchen und finden, um diese gezielt anzusehen, zu ändern oder zu löschen.
+	// Als Lerner möchte ich zu Vokabeln Bemerkungen hinzufügen, um Hinweise zur Verwendung oder Aussprache festzuhalten.
+	
+	// (x) Als Lerner möchte ich sehen, wann ich das jeweilige Thema / Kapitel zuletzt geübt habe, um schon länger nicht geübte Vokabeln vorrangig zu üben.
+	// Als Lerner möchte ich eine Vokabel, die ich gerade nicht gewusst habe, in der aktuellen Runde so oft präsentiert bekommen, bis ich die Vokabel gekonnt habe, um diese am Ende doch zu können.
+	// Als Lerner möchte ich zu Vokabeln vorhandene Audioaufnahmen abspielen, um mir die Aussprache anzuhören und mit mehreren Sinnen zu lernen.
+	// Als Lerner möchte ich zu Vokabeln vorhandene Abbildungen anzeigen, um mit mehreren Sinnen zu lernen.
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
